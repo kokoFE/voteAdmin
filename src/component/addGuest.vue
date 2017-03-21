@@ -16,9 +16,8 @@
     <el-form-item label="上传嘉宾头像">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          
-          :auto-upload="false"
+          action="#"
+          :auto-upload="true"
           :show-file-list="true"
           :on-success="handleAvatarScucess"
           :before-upload="beforeAvatarUpload">
@@ -29,20 +28,23 @@
 
 
     </el-form-item><el-form-item>
-      <el-button type="primary" @click="onSubmit">查询</el-button>
+      <el-button type="primary" @click="onSubmit">提交</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
-  export default {
+ export default {
     data() {
       return {
         form: {
-          guestName: '',
-          imageUrl: '',
-          textarea: ''
+          guestName: this.$store.state.count,
+          textarea: '',
+          imageUrl: ''
         }
       }
+    },
+    computed: function(){
+      name: this.$store.state.count
     },
     methods: {
       handleAvatarScucess(res, file) {

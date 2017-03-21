@@ -80,6 +80,7 @@
     },
     methods: {
       handleEdit(index, row) {
+        this.$store.commit('increment')
         console.log(index, row);
       },
       handleDelete(index, row) {

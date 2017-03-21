@@ -8,10 +8,12 @@
     "build": "rimraf dist && webpack -p --progress --hide-modules"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "element-ui": "^1.1.2",
     "normalize-css": "^2.3.1",
     "vue": "^2.1.8",
-    "vue-router": "^2.3.0"
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
   },
   "engines": {
     "node": ">=6"
