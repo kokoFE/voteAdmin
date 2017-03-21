@@ -1,7 +1,7 @@
 <template>
   <el-form :inline="true" :model="form" class="form">
     <el-form-item label="嘉宾姓名">
-      <el-input v-model="form.guestName" placeholder="嘉宾姓名"></el-input>
+      <el-input v-model="form.name" placeholder="嘉宾姓名"></el-input>
     </el-form-item>
 
     <el-form-item label="嘉宾简介">
@@ -9,7 +9,7 @@
         type="textarea"
         :rows="3"
         placeholder="请输入内容"
-        v-model="form.textarea">
+        v-model="form.address">
       </el-input>
     </el-form-item>
     
@@ -26,7 +26,6 @@
         </el-upload>
     </el-form-item>
 
-
     </el-form-item><el-form-item>
       <el-button type="primary" @click="onSubmit">提交</el-button>
     </el-form-item>
@@ -36,15 +35,17 @@
  export default {
     data() {
       return {
-        form: {
-          guestName: this.$store.state.count,
-          textarea: '',
-          imageUrl: ''
-        }
+        // form: {
+        //   guestName: '',
+        //   textarea: '',
+        //   imageUrl: ''
+        // }
       }
     },
-    computed: function(){
-      name: this.$store.state.count
+    computed: {
+      form: function(){
+        return this.$store.state.getGuestData
+      }
     },
     methods: {
       handleAvatarScucess(res, file) {
@@ -66,6 +67,7 @@
         this.$refs.upload.submit();
       },
       onSubmit() {
+        this.$store.commit('increment')
         console.log(this.form)
         console.log('submit!');
       }

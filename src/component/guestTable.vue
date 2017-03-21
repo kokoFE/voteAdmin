@@ -62,17 +62,17 @@
           hasImg: 1
         }, {
           date: '2016-05-04',
-          name: '王小虎',
+          name: '李逍遥',
           address: '上海市普陀区金沙江路 1517 弄',
           hasImg: 0
         }, {
           date: '2016-05-01',
-          name: '王小虎',
+          name: '赵灵儿',
           address: '上海市普陀区金沙江路 1519 弄',
           hasImg: 1
         }, {
           date: '2016-05-03',
-          name: '王小虎',
+          name: '酒剑仙',
           address: '上海市普陀区金沙江路 1516 弄',
           hasImg: 0
         }]
@@ -80,7 +80,7 @@
     },
     methods: {
       handleEdit(index, row) {
-        this.$store.commit('increment')
+        this.$store.commit('setGuestData',row) 
         console.log(index, row);
       },
       handleDelete(index, row) {
