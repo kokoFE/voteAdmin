@@ -9,7 +9,7 @@
         type="textarea"
         :rows="3"
         placeholder="请输入内容"
-        v-model="form.address">
+        v-model="form.introduce">
       </el-input>
     </el-form-item>
     
@@ -32,7 +32,8 @@
   </el-form>
 </template>
 <script>
- export default {
+var axios = require('axios')
+export default {
     data() {
       return {
         // form: {
@@ -67,6 +68,10 @@
         this.$refs.upload.submit();
       },
       onSubmit() {
+        axios.get('http://localhost:3000/api/test')
+          .then(function(response){
+            console.log(response.data)
+          })
         this.$store.commit('increment')
         console.log(this.form)
         console.log('submit!');
