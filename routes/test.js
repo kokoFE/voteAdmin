@@ -5,12 +5,6 @@ var db = require('../models/db');
 var Lecturer = db.lecturer;
 
 router.get('/test', (req, res)=> {
-  // var lecturer = new Lecturer({
-  //   name: "一灯大师",
-  //   introduce: "北帝"
-  // })
-  // lecturer.save();
-  // res.send('data saved')
   Lecturer.find({})
         .then(function (lec){
         res.json(lec)
@@ -21,10 +15,18 @@ router.get('/test', (req, res)=> {
       })
 })
 
-// router.get('/testagain', (req, res) => {
-//   User.find((err, doc) => {
-//     res.json(doc)
-//   })
-// })
+router.post('/testagain', (req, res, next) => {
+  var data = new Lecturer({
+    name: req.body.name,
+    introduce: req.body.introduce
+  })
+  console.log(req)
+  data.save(function(err, doc){
+    console.log(doc);
+  })
+  // User.find((err, doc) => {
+  //   res.json(doc)
+  // })
+})
 
 module.exports = router;

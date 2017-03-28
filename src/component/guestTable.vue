@@ -9,7 +9,7 @@
         width="180">
         <template scope="scope">
           <el-icon name="time"></el-icon>
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+          <span style="margin-left: 10px">{{ scope.row.createTime | getDate }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -19,7 +19,7 @@
           <span>{{ scope.row.name }}</span>
           <!--<el-popover trigger="hover" placement="top">
             <p>姓名: {{ scope.row.name }}</p>
-            <p>住址: {{ scope.row.address }}</p>
+            <p>住址: {{ scope.row.introduce }}</p>
             <div slot="reference" class="name-wrapper">
               <el-tag>{{ scope.row.name }}</el-tag>
             </div>
@@ -29,7 +29,7 @@
       <el-table-column
         label="嘉宾简介">
         <template scope="scope">
-          <p>{{scope.row.address}}</p>
+          <p>{{scope.row.introduce}}</p>
         </template>
       </el-table-column>
       <el-table-column
@@ -62,35 +62,26 @@
 </template>
 
 <script>
-  export default {
+var axios = require('axios')
+
+export default {
     data() {
       return {
         dialogVisible: false,
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          hasImg: 1
-        }, {
-          date: '2016-05-04',
-          name: '李逍遥',
-          address: '上海市普陀区金沙江路 1517 弄',
-          hasImg: 0
-        }, {
-          date: '2016-05-01',
-          name: '赵灵儿',
-          address: '上海市普陀区金沙江路 1519 弄',
-          hasImg: 1
-        }, {
-          date: '2016-05-03',
-          name: '酒剑仙',
-          address: '上海市普陀区金沙江路 1516 弄',
-          hasImg: 0
-        }]
+        tableData: []
       }
+    },
+    beforeMount: function (){
+      let that = this
+      axios.get('http://localhost:3000/api/test')
+        .then(function(response){
+          console.log(response.data)
+          that.$data.tableData = response.data
+        })
     },
     methods: {
       handleEdit(index, row) {
+        // console.log(this.$data.tableData)
         this.$store.commit('setGuestData',row) 
         console.log(index, row);
       },
@@ -103,6 +94,9 @@
       formatHasImg: function (value){
         let statusArr = ['否','是']
         return statusArr[value]
+      },
+      getDate: function (value){
+        return value.slice(0,10)
       }
     }
   }

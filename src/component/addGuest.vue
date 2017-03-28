@@ -68,11 +68,16 @@ export default {
         this.$refs.upload.submit();
       },
       onSubmit() {
-        axios.get('http://localhost:3000/api/test')
-          .then(function(response){
-            console.log(response.data)
+        axios.post('http://localhost:3000/api/testagain', {
+            name: this.form.name,
+            introduce: this.form.introduce
           })
-        this.$store.commit('increment')
+          .then(function(response){
+            console.log(response.body)
+            this.$store.state.getGuestData = response
+            console.log(this.$store.state.getGuestData)
+          })
+        this.$store.commit('increment')//AUEX
         console.log(this.form)
         console.log('submit!');
       }
@@ -80,9 +85,6 @@ export default {
   }
 </script>
 <style>
-  .form {
-    /*padding: 20px 50px;*/
-  }
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
