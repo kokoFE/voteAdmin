@@ -16,7 +16,8 @@
     <el-form-item label="上传嘉宾头像">
         <el-upload
           class="avatar-uploader"
-          action="#"
+          action="http://localhost:3000/api/testagain"
+          name="logo"
           :auto-upload="true"
           :show-file-list="true"
           :on-success="handleAvatarScucess"
@@ -24,7 +25,7 @@
           <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
-    </el-form-item>
+    </el-form-item>   
 
     </el-form-item><el-form-item>
       <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -74,6 +75,7 @@ export default {
           })
           .then(function(response){
             console.log(response.body)
+            // this.$refs.upload.submit();
             this.$store.state.getGuestData = response
             console.log(this.$store.state.getGuestData)
           })

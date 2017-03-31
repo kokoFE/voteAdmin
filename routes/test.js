@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../models/db');
+var multer = require('multer');
 
 var Lecturer = db.lecturer;
 
@@ -15,7 +16,19 @@ router.get('/test', (req, res)=> {
       })
 })
 
-router.post('/testagain', (req, res, next) => {
+var upload = multer({dest: 'upload/'})
+// router.post('/upload', upload.single('logo'), (req, res, next) => {
+//   var data = new Lecturer({
+//     name: req.body.name,
+//     introduce: req.body.introduce
+//   })
+//   data.save(function(err, doc){
+//     console.log(doc);
+//   }) 
+//   res.send("success")
+// })
+
+router.post('/testagain', upload.single('logo'), (req, res, next) => {
   var data = new Lecturer({
     name: req.body.name,
     introduce: req.body.introduce
