@@ -28,7 +28,7 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage});
 
 router.post('/addGuest', upload.single('logo'), (req, res, next) => {
-  console.log(req.file)
+  console.log("this is" + req.file)
   var data = new Lecturer({
     name: req.body.name,
     introduce: req.body.introduce,

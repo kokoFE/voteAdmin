@@ -1,7 +1,7 @@
 <template>
   <el-form :inline="true" :model="form" class="form">
     <el-form-item label="嘉宾姓名">
-      <el-input v-model="form.name" placeholder="嘉宾姓名"></el-input>
+      <el-input v-model="form.name" placeholder="嘉宾姓名" :disabled="false"></el-input>
     </el-form-item>
 
     <el-form-item label="嘉宾简介">
