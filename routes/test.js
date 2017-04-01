@@ -16,30 +16,27 @@ router.get('/test', (req, res)=> {
       })
 })
 
-var upload = multer({dest: 'upload/'})
-// router.post('/upload', upload.single('logo'), (req, res, next) => {
-//   var data = new Lecturer({
-//     name: req.body.name,
-//     introduce: req.body.introduce
-//   })
-//   data.save(function(err, doc){
-//     console.log(doc);
-//   }) 
-//   res.send("success")
-// })
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './upload');
+  },
+  filename: function (req, file, cb) {
+    var suffix = file.originalname.split('.')[1];
+    cb(null, file.fieldname + '-' + Date.now() + '.' + suffix);
+  }
+});
+var upload = multer({storage: storage});
 
-router.post('/testagain', upload.single('logo'), (req, res, next) => {
+router.post('/addGuest', upload.single('logo'), (req, res, next) => {
+  console.log(req.file)
   var data = new Lecturer({
     name: req.body.name,
-    introduce: req.body.introduce
+    introduce: req.body.introduce,
+    imgUrl: '3'
   })
-  console.log(req)
   data.save(function(err, doc){
-    console.log(doc);
+    console.log(err);
   })
-  // User.find((err, doc) => {
-  //   res.json(doc)
-  // })
 })
 
 module.exports = router;

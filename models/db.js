@@ -6,6 +6,7 @@ const testSchema = mongoose.Schema({
     required: true
   },
   introduce: String,
+  imgUrl: String,
   createTime: {
     type: Date,
     default: Date.now

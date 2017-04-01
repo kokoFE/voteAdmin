@@ -16,10 +16,12 @@
     <el-form-item label="上传嘉宾头像">
         <el-upload
           class="avatar-uploader"
-          action="http://localhost:3000/api/testagain"
+          ref="upload"
+          action="http://localhost:3000/api/addGuest"
           name="logo"
-          :auto-upload="true"
+          :auto-upload="false"
           :show-file-list="true"
+          :file-list="fileList"
           :on-success="handleAvatarScucess"
           :before-upload="beforeAvatarUpload">
           <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
@@ -69,13 +71,13 @@ export default {
         this.$refs.upload.submit();
       },
       onSubmit() {
-        axios.post('http://localhost:3000/api/testagain', {
+        axios.post('http://localhost:3000/api/addGuest', {
             name: this.form.name,
             introduce: this.form.introduce
           })
           .then(function(response){
-            console.log(response.body)
-            // this.$refs.upload.submit();
+            // console.log(response.body)
+            this.$refs.upload.submit();
             this.$store.state.getGuestData = response
             console.log(this.$store.state.getGuestData)
           })
