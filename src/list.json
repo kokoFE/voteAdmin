@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "cate": "checkbox",
+    "title": "This is checkbox",
+    "options": [
+      "opt1",
+      "opt2",
+      "opt3"
+    ]
+  },{
+    "id": 2,
+    "cate": "radio",
+    "title": "This is radio",
+    "options": [
+      "OPT1",
+      "OPT2" 
+    ],
+    "required": true
+  },{
+    "id": 3,
+    "cate": "text",
+    "title": "This is text",
+    "required": true
+  }
+]
