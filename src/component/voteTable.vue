@@ -1,5 +1,5 @@
 <template>
-  <!--<el-card class="box-card" style="height:400px">
+  <el-card class="box-card" style="height:400px">
     <el-table 
       :data="tableData">
       <el-table-column 
@@ -31,20 +31,21 @@
       </el-table-column>
     </el-table>
     <el-button type="primary" @click="addVote">+ 新建问卷</el-button>
-  </el-card>-->
-  <vote-table v-if="!showPannel"></vote-table>
-  <div v-else-if="showPannel">111</div>
+  </el-card>
 </template>
 <script>
-  import voteTable from '../component/voteTable.vue'
-
   export default {
-    components: {
-      voteTable
-    },
     data() {
       return {
-        showPannel: 0
+        tableData: [{
+          "title": "投票1",
+          "date": "2017年4月5日",
+          "status": "0"
+        },{
+          "title": "投票2",
+          "date": "2017年4月6日",
+          "status": "1"
+        }]
       }
     },
     // computed: {
@@ -52,7 +53,8 @@
     // },
     methods: {
       addVote: function(){
-        this.showPannel = this.$store.state.showAddVotePannel
+        console.log(!this.$store.state.showAddVotePannel)
+        return !this.$store.state.showAddVotePannel
       }
     }
   }

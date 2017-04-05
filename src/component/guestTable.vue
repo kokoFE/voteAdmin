@@ -72,11 +72,11 @@ export default {
       }
     },
     beforeMount: function (){
-      let that = this
+      let _this  = this
       axios.get('http://localhost:3000/api/test')
         .then(function(response){
           console.log(response.data)
-          that.$data.tableData = response.data
+          _this.$data.tableData = response.data
         })
     },
     methods: {

@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     getGuestData: {},
-    count: 0
+    count: 0,
+    showAddVotePannel: 0
   },
   mutations: {
     increment (state){

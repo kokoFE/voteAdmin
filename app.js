@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var test = require('./routes/test');
+var api = require('./routes/api');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/vote');
@@ -37,7 +37,7 @@ app.all('*', function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/api', test);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

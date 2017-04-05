@@ -28,15 +28,15 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage});
 
 router.post('/addGuest', upload.single('logo'), (req, res, next) => {
-  console.log("this is" + req.file)
+  console.log(req.body)
   var data = new Lecturer({
     name: req.body.name,
-    introduce: req.body.introduce,
-    imgUrl: '3'
+    introduce: req.body.introduce
   })
   data.save(function(err, doc){
     console.log(err);
   })
+  res.status(200).send('Good Request');
 })
 
 module.exports = router;

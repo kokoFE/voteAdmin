@@ -21,7 +21,6 @@
           name="logo"
           :auto-upload="false"
           :show-file-list="true"
-          :file-list="fileList"
           :on-success="handleAvatarScucess"
           :before-upload="beforeAvatarUpload">
           <img v-if="form.imageUrl" :src="form.imageUrl" class="avatar">
@@ -29,7 +28,7 @@
         </el-upload>
     </el-form-item>   
 
-    </el-form-item><el-form-item>
+    <el-form-item>
       <el-button type="primary" @click="onSubmit">提交</el-button>
     </el-form-item>
   </el-form>
@@ -44,6 +43,7 @@ export default {
         //   textarea: '',
         //   imageUrl: ''
         // }
+        fileList:[]
       }
     },
     computed: {
@@ -71,15 +71,19 @@ export default {
         this.$refs.upload.submit();
       },
       onSubmit() {
+        let _this = this
         axios.post('http://localhost:3000/api/addGuest', {
             name: this.form.name,
             introduce: this.form.introduce
           })
-          .then(function(response){
-            // console.log(response.body)
-            this.$refs.upload.submit();
-            this.$store.state.getGuestData = response
-            console.log(this.$store.state.getGuestData)
+          .then(function (response){
+            console.log(response)
+            _this.$refs.upload.submit();
+            _this.$store.state.getGuestData = response
+            // console.log(this.$store.state.getGuestData)
+          })
+          .catch(function (error){
+            console.log(error)
           })
         this.$store.commit('increment')//AUEX
         console.log(this.form)

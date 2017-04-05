@@ -2,7 +2,7 @@
   <div id="top-banner">
     <el-row>
       <el-col :span="24">
-        <h1>"我的栏目你作主"投票管理后台 </h1>
+        <h1>投票管理后台 </h1>
       </el-col>
     </el-row>
   </div>
