@@ -43,7 +43,7 @@
           "status": "0"
         },{
           "title": "投票2",
-          "date": "2017年4月6日",
+          "date": "2017年4月10日",
           "status": "1"
         }]
       }
@@ -54,7 +54,7 @@
     methods: {
       addVote: function(){
         console.log(!this.$store.state.showAddVotePannel)
-        return !this.$store.state.showAddVotePannel
+        return this.$store.state.showAddVotePannel = !this.$store.state.showAddVotePannel
       }
     }
   }

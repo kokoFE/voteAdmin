@@ -32,27 +32,35 @@
     </el-table>
     <el-button type="primary" @click="addVote">+ 新建问卷</el-button>
   </el-card>-->
-  <vote-table v-if="!showPannel"></vote-table>
-  <div v-else-if="showPannel">111</div>
+  <div class="container">
+    <vote-table v-if="showPannel"></vote-table>
+    <add-vote v-else-if="!showPannel"></add-vote>
+  </div>
+
 </template>
 <script>
   import voteTable from '../component/voteTable.vue'
+  import addVote from '../component/addVote.vue'
 
   export default {
     components: {
-      voteTable
+      voteTable,
+      addVote
     },
     data() {
       return {
-        showPannel: 0
+        // showPannel: 0
       }
     },
-    // computed: {
-    //   showPannel: this.$store.state.showAddVotePannel
-    // },
+    computed: {
+      showPannel(){
+        return this.$store.state.showAddVotePannel
+      } 
+    },
     methods: {
-      addVote: function(){
-        this.showPannel = this.$store.state.showAddVotePannel
+      testadd: function(){
+        // this.showPannel = this.$store.state.showAddVotePannel
+        console.log(this.$store.state.showAddVotePannel)
       }
     }
   }
