@@ -8,6 +8,9 @@
         <el-button @click="addQuestion('text')">文本题</el-button>
       </el-col>
     </el-row>
+    <el-row v-else-if="!dialogTableVisible">
+      <el-col>111</el-col>
+    </el-row>
     <el-button type="info" size="large" @click="dialogTableVisible = true">+ 添加问题</el-button>
     <el-row>
       <el-col :span="6" :offset="4">
@@ -45,6 +48,7 @@
       addQuestion(cate) {
         let quest = {
           id: this.vote.length,
+          data: [],
           cate: cate
         }
         this.vote.push(quest)
