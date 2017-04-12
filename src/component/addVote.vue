@@ -9,7 +9,9 @@
       </el-col>
     </el-row>
     <el-row v-else-if="!dialogTableVisible">
-      <el-col>111</el-col>
+      <el-col v-for="item in vote">
+        {{item.data}}
+      </el-col>
     </el-row>
     <el-button type="info" size="large" @click="dialogTableVisible = true">+ 添加问题</el-button>
     <el-row>
