@@ -3,9 +3,9 @@
     <el-input type="text" placeholder="请输入投票标题"></el-input>
     <el-row v-if="vote.length">
       <el-col v-for="(item, index) in vote">
-            <el-input v-if="item.cate == 'text'" v-model="result[index].data"></el-input>
-            <el-radio v-else-if="item.cate == 'radio'" class="radio" v-model="result[index].data" v-for="option in item.options" :label="option"></el-radio>
-            <el-checkbox-group v-else-if="item.cate == 'checkbox'" v-model="result[index].data">
+            <el-input v-if="item.cate == 'text'"></el-input>
+            <el-radio v-else-if="item.cate == 'radio'" class="radio" v-for="option in item.options" :label="option"></el-radio>
+            <el-checkbox-group v-else-if="item.cate == 'checkbox'">
               <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
             </el-checkbox-group>
       </el-col>
