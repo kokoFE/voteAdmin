@@ -1,6 +1,15 @@
 <template>
   <el-card class="box-card" style="height: 400px">
     <el-input type="text" placeholder="请输入投票标题"></el-input>
+    <el-row v-if="vote.length">
+      <el-col v-for="(item, index) in vote">
+            <el-input v-if="item.cate == 'text'" v-model="result[index].data"></el-input>
+            <el-radio v-else-if="item.cate == 'radio'" class="radio" v-model="result[index].data" v-for="option in item.options" :label="option"></el-radio>
+            <el-checkbox-group v-else-if="item.cate == 'checkbox'" v-model="result[index].data">
+              <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
+            </el-checkbox-group>
+      </el-col>
+    </el-row>    
     <el-row  v-if="dialogTableVisible">
       <el-col :span="12" :offset="6" style="text-align:center;">
         <el-button @click="addQuestion('radio')">单选题</el-button>
@@ -8,11 +17,7 @@
         <el-button @click="addQuestion('text')">文本题</el-button>
       </el-col>
     </el-row>
-    <el-row v-else-if="!dialogTableVisible">
-      <el-col v-for="item in vote">
-        {{item.data}}
-      </el-col>
-    </el-row>
+
     <el-button type="info" size="large" @click="dialogTableVisible = true">+ 添加问题</el-button>
     <el-row>
       <el-col :span="6" :offset="4">
@@ -50,8 +55,10 @@
       addQuestion(cate) {
         let quest = {
           id: this.vote.length,
-          data: [],
-          cate: cate
+          title: '',
+          cate: cate,
+          options: ['选项一','选项二'],
+          result: []
         }
         this.vote.push(quest)
         this.dialogTableVisible = false
