@@ -1,13 +1,15 @@
 <template>
-  <el-card class="box-card" style="height: 400px">
-    <el-input type="text" placeholder="请输入投票标题"></el-input>
+  <el-card class="box-card" style="height: 400px;">
+    <h1 id="vote-title" @dblclick="test">请输入问卷名称</h1>
     <el-row v-if="vote.length">
       <el-col v-for="(item, index) in vote">
-            <el-input v-if="item.cate == 'text'"></el-input>
-            <el-radio v-else-if="item.cate == 'radio'" class="radio" v-for="option in item.options" :label="option"></el-radio>
-            <el-checkbox-group v-else-if="item.cate == 'checkbox'">
-              <el-checkbox v-for="option in item.options" :label="option"></el-checkbox>
-            </el-checkbox-group>
+        <h2  @dblclick="test(item.title)">{{index + 1 + ". " +item.title}}</h2>
+        <el-input v-model="item.title"></el-input>
+        <el-input v-if="item.cate == 'text'"></el-input>
+        <el-radio v-else-if="item.cate == 'radio'" class="radio" v-for="(option, index) in item.options" :label="option" :key="index"></el-radio>
+        <el-checkbox-group v-else-if="item.cate == 'checkbox'">
+          <el-checkbox v-for="(option, index) in item.options" :label="option" :key="index"></el-checkbox>
+        </el-checkbox-group>
       </el-col>
     </el-row>    
     <el-row  v-if="dialogTableVisible">
@@ -52,17 +54,28 @@
       save() {
         console.log(this.date)
       },
+      test(item) {
+        console.log(this)
+        console.log(item)
+        console.log('dbclick')
+      },
       addQuestion(cate) {
         let quest = {
           id: this.vote.length,
-          title: '',
+          title: '请输入问题',
           cate: cate,
           options: ['选项一','选项二'],
           result: []
         }
+        console.log(this)
         this.vote.push(quest)
         this.dialogTableVisible = false
       }
     }
   }
 </script>
+<style>
+#vote-title {
+  text-align: center;
+}
+</style>
