@@ -1,15 +1,30 @@
 <template>
-  <el-card class="box-card" style="height: 400px;">
-    <h1 id="vote-title" @dblclick="test">请输入问卷名称</h1>
-    <el-row v-if="vote.length">
-      <el-col v-for="(item, index) in vote">
-        <h2  @dblclick="test(item.title)">{{index + 1 + ". " +item.title}}</h2>
-        <el-input v-model="item.title"></el-input>
-        <el-input v-if="item.cate == 'text'"></el-input>
-        <el-radio v-else-if="item.cate == 'radio'" class="radio" v-for="(option, index) in item.options" :label="option" :key="index"></el-radio>
-        <el-checkbox-group v-else-if="item.cate == 'checkbox'">
-          <el-checkbox v-for="(option, index) in item.options" :label="option" :key="index"></el-checkbox>
-        </el-checkbox-group>
+  <el-card class="box-card" style="min-height: 400px;">
+    <h2 id="vote-title" @dblclick="edit" v-text="vote.title"></h2>
+    <el-input v-model="vote.title"></el-input>
+    <el-row v-if="vote.title.length">
+      <el-col>
+        <ol>
+          <li v-for="(item, index) in vote.list">
+            <h3 @dblclick="edit(item)" :class="{none: item.edit}">{{item.title}}</h3>
+            <el-input @blur="save(item)" v-model="item.title" class="none" :class="{test: item.edit}"></el-input>
+            <div>
+              <el-input v-if="item.cate == 'text'"></el-input>
+
+              <el-radio v-else-if="item.cate == 'radio'" class="radio" v-for="(option, index) in item.options" :label="option" :key="index">
+                
+                <el-input @blur="save(item)" v-model="item.options[index]"  class="input"></el-input>
+                
+              </el-radio>
+              
+              <!--<input type="text">-->
+              <el-checkbox-group v-else-if="item.cate == 'checkbox'" v-for="(option, index) in item.options">
+                <el-checkbox  @dblclick="edit(item)" :label="option" :key="index"></el-checkbox>
+                <el-input @blur="save(item)" v-model="item.options[index]"  class="input"></el-input>
+              </el-checkbox-group>
+            </div>
+          </li>
+        </ol>
       </el-col>
     </el-row>    
     <el-row  v-if="dialogTableVisible">
@@ -47,35 +62,51 @@
         },
         setDate: '',
         dialogTableVisible: false,
-        vote: []
+        vote: {
+          title: '请输入问卷名称',
+          list: []
+        }
       }
     },
     methods: {
-      save() {
-        console.log(this.date)
+      save(item) {
+        item.edit = false;
+        console.log(item.edit)
       },
-      test(item) {
-        console.log(this)
-        console.log(item)
-        console.log('dbclick')
+      edit(item) {
+        item.edit = true;
+        console.log(item.edit )
       },
       addQuestion(cate) {
         let quest = {
-          id: this.vote.length,
+          id: this.vote.list.length,
           title: '请输入问题',
           cate: cate,
           options: ['选项一','选项二'],
-          result: []
+          result: [],
+          edit: false
         }
-        console.log(this)
-        this.vote.push(quest)
+        this.vote.list.push(quest)
         this.dialogTableVisible = false
       }
     }
   }
 </script>
 <style>
+h3 {
+  margin: 0;
+}
 #vote-title {
   text-align: center;
+}
+.input {
+  width: 300px;
+}
+.none {
+  display: none;
+}
+.test {
+  display: inline-block;
+  width: 500px;
 }
 </style>
