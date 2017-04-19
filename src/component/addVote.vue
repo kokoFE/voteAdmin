@@ -11,8 +11,8 @@
             <div>
               <el-input v-if="item.cate == 'text'"></el-input>
 
-              <el-radio v-else-if="item.cate == 'radio'" class="radio" v-for="(option, index) in item.options" :label="option" :key="index">
-                
+              <el-radio @dblclick="save(item)" v-else-if="item.cate == 'radio'" class="radio" v-for="(option, index) in item.options" :label="option" :key="index" >
+                {{ option }}
                 <el-input @blur="save(item)" v-model="item.options[index]"  class="input"></el-input>
                 
               </el-radio>
@@ -23,6 +23,10 @@
                 <el-input @blur="save(item)" v-model="item.options[index]"  class="input"></el-input>
               </el-checkbox-group>
             </div>
+            <el-button size="small" type="info">新增选项</el-button>
+            <el-button size="small" :plain="true">上移</el-button>
+            <el-button size="small" :plain="true">下移</el-button>
+            <el-button size="small" type="danger">删除</el-button>
           </li>
         </ol>
       </el-col>
