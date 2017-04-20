@@ -11,22 +11,34 @@
             <div>
               <el-input v-if="item.cate == 'text'"></el-input>
 
-              <el-radio @dblclick="save(item)" v-else-if="item.cate == 'radio'" class="radio" v-for="(option, index) in item.options" :label="option" :key="index" >
-                {{ option }}
-                <el-input @blur="save(item)" v-model="item.options[index]"  class="input"></el-input>
-                
-              </el-radio>
+              <div  v-else-if="item.cate == 'radio'"  v-for="(option, index) in item.options" style="margin-bottom:10px">
+                <el-radio @dblclick="save(item)" :label="option" :key="index" class="item"></el-radio>
+                <el-input v-model="item.options[index]"  class="input"></el-input>
+                <el-button-group>
+                  <el-button @click="move(item.options,index,-1)" icon="arrow-up" size="mini" type="default" :disabled="index == 0"></el-button>
+                  <el-button @click="move(item.options,index,1)" icon="arrow-down" size="mini" type="default" :disabled="index == item.options.length - 1"></el-button>
+                  <el-button @click="item.options.splice(index,1)" icon="close" size="mini" type="default" :disabled="item.options.length == 1"></el-button>
+                </el-button-group>
+              </div>
               
-              <!--<input type="text">-->
-              <el-checkbox-group v-else-if="item.cate == 'checkbox'" v-for="(option, index) in item.options">
-                <el-checkbox  @dblclick="edit(item)" :label="option" :key="index"></el-checkbox>
+              <div v-else-if="item.cate == 'checkbox'" v-for="(option, index) in item.options">
+                <el-checkbox  @dblclick="edit(item)"   :label="option" :key="index"></el-checkbox>
                 <el-input @blur="save(item)" v-model="item.options[index]"  class="input"></el-input>
-              </el-checkbox-group>
+                <el-button-group>
+                  <el-button @click="move(item.options,index,-1)" icon="arrow-up" size="mini" type="default" :disabled="index == 0"></el-button>
+                  <el-button @click="move(item.options,index,1)" icon="arrow-down" size="mini" type="default" :disabled="index == item.options.length - 1"></el-button>
+                  <el-button @click="item.options.splice(index,1)" icon="close" size="mini" type="default"></el-button>
+                </el-button-group>
+              </div>
             </div>
-            <el-button size="small" type="info">新增选项</el-button>
-            <el-button size="small" :plain="true">上移</el-button>
-            <el-button size="small" :plain="true">下移</el-button>
-            <el-button size="small" type="danger">删除</el-button>
+            <el-row>
+              <el-col>
+                <el-button @click="addOption(item)" size="small" type="info">新增选项</el-button>
+                <el-button @click="move(vote.list,index,-1)" size="small" :plain="true" :disabled="index == 0">上移</el-button>
+                <el-button @click="move(vote.list,index,1)" size="small" :plain="true" :disabled="index == vote.list.length -1">下移</el-button>
+                <el-button @click="vote.list.splice(index,1)"size="small" type="danger">删除</el-button>
+              </el-col>
+            </el-row>
           </li>
         </ol>
       </el-col>
@@ -92,6 +104,20 @@
         }
         this.vote.list.push(quest)
         this.dialogTableVisible = false
+      },
+      addOption(item) {
+        item.options.push('请输入选项')
+        // var options = this.
+        // this.vote.list.options.push('1')
+      },
+      move(data,index,direction) {
+        console.log('move')
+        var target = index + direction;
+        var temp = data[index];
+        data.splice(index,1)
+        data.splice(target, 0,temp)
+        
+
       }
     }
   }
@@ -112,5 +138,15 @@ h3 {
 .test {
   display: inline-block;
   width: 500px;
+}
+.item + .item {
+  margin-top: 10px;
+}
+i {
+  color: rgb(132, 146, 166);
+  opacity: 0.5;
+}
+i:hover {
+  opacity: 1;
 }
 </style>
