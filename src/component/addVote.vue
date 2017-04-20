@@ -1,15 +1,15 @@
 <template>
   <el-card class="box-card" style="min-height: 400px;">
     <h2 id="vote-title" @dblclick="edit" v-text="vote.title"></h2>
-    <el-input v-model="vote.title"></el-input>
+    <el-input v-model="vote.title" :class="{visable: editing, none: !editing}"></el-input>
     <el-row v-if="vote.title.length">
       <el-col>
         <ol>
           <li v-for="(item, index) in vote.list">
-            <h3 @dblclick="edit(item)" :class="{none: item.edit}">{{item.title}}</h3>
-            <el-input @blur="save(item)" v-model="item.title" class="none" :class="{test: item.edit}"></el-input>
+            <h3 @dblclick="edit(item)" :class="{none: item.editing}">{{item.title}}</h3>
+            <el-input @blur="save(item)" v-model="item.title" :class="{visable: item.editing, none: !editing}"></el-input>
             <div>
-              <el-input v-if="item.cate == 'text'"></el-input>
+              <el-input v-if="item.cate == 'text'" disabled placeholder="请输入文字..."></el-input>
 
               <div  v-else-if="item.cate == 'radio'"  v-for="(option, index) in item.options" style="margin-bottom:10px">
                 <el-radio @dblclick="save(item)" :label="option" :key="index" class="item"></el-radio>
@@ -78,6 +78,7 @@
         },
         setDate: '',
         dialogTableVisible: false,
+        editing: false,
         vote: {
           title: '请输入问卷名称',
           list: []
@@ -86,12 +87,12 @@
     },
     methods: {
       save(item) {
-        item.edit = false;
-        console.log(item.edit)
+        item.editing = false;
+        console.log(item.editing)
       },
       edit(item) {
-        item.edit = true;
-        console.log(item.edit )
+        item.editing = true;
+        console.log(item.editing )
       },
       addQuestion(cate) {
         let quest = {
@@ -100,7 +101,7 @@
           cate: cate,
           options: ['选项一','选项二'],
           result: [],
-          edit: false
+          editing: false
         }
         this.vote.list.push(quest)
         this.dialogTableVisible = false
@@ -123,6 +124,9 @@
   }
 </script>
 <style>
+[v-cloak] { 
+  display: none; 
+}
 h3 {
   margin: 0;
 }
@@ -148,5 +152,8 @@ i {
 }
 i:hover {
   opacity: 1;
+}
+.visable {
+  display: inline-block;
 }
 </style>
