@@ -1,16 +1,17 @@
 <template>
   <el-card class="box-card" style="min-height: 400px;">
-    <h2 id="vote-title" @dblclick="edit" v-text="vote.title"></h2>
-    <!--<el-input v-model="vote.title" :class="{visable: editing, none: !editing}"></el-input>-->
-    <!--<el-input v-model="vote.title"></el-input>-->
+    <h2 id="vote-title" @dblclick="edit(vote)" v-text="vote.title"></h2>
+    <el-input @blur="save(vote)" @change="change(vote.title)" v-model="vote.title" :class="{visable: editing == vote, none: editing != vote}"></el-input>
+
+    <!--list panel start-->
     <el-row v-if="vote.title.length">
       <el-col>
         <ol>
           <li v-for="(item, index) in vote.list">
-            <h3 @dblclick="edit(item)" :class="{none: editing == item  }">{{item.title}}</h3>
-            <el-input @blur="save(item)" v-model="item.title" :class="{visable: editing == item, none: editing != item}"  class="input"></el-input>
+            <h3 @dblclick="edit(item)" :class="{none: editing == item}">{{item.title}}</h3>
+            <el-input @blur="save(item)" v-model="item.title" :class="{visable: editing == item, none: editing != item}" class="input"></el-input>
             <div>
-              <el-input v-if="item.cate == 'text'" disabled placeholder="请输入文字..."  class="input"></el-input>
+              <el-input v-if="item.cate == 'text'" disabled placeholder="请输入文字..." class="input"></el-input>
 
               <div  v-else-if="item.cate == 'radio'"  v-for="(option, index) in item.options" style="margin-bottom:10px">
                 <!--<el-radio @change="test(item)" :label="option" :key="index" class="item"></el-radio>-->
@@ -49,12 +50,16 @@
                 <el-button @click="move(vote.list,index,-1)" size="small" :plain="true" :disabled="index == 0">上移</el-button>
                 <el-button @click="move(vote.list,index,1)" size="small" :plain="true" :disabled="index == vote.list.length -1">下移</el-button>
                 <el-button @click="vote.list.splice(index,1)"size="small" type="danger">删除</el-button>
+                <el-checkbox v-model="item.required">是否必选</el-checkbox>
               </el-col>
             </el-row>
           </li>
         </ol>
       </el-col>
-    </el-row>    
+    </el-row> 
+    <!--list panel end-->
+
+    <!--select question cate -->
     <el-row  v-if="dialogTableVisible">
       <el-col :span="12" :offset="6" style="text-align:center;">
         <el-button @click="addQuestion('radio')">单选题</el-button>
@@ -63,7 +68,10 @@
       </el-col>
     </el-row>
 
-    <el-button type="info" size="large" @click="dialogTableVisible = true">+ 添加问题</el-button>
+    <!--add question-->
+    <el-button type="info" size="large" @click="dialogTableVisible = true" id="add-quest">+ 添加问题</el-button>
+
+    <!--tool bar-->
     <el-row>
       <el-col :span="6" :offset="4">
         <el-date-picker
@@ -100,18 +108,25 @@
     methods: {
       save(item) {
         // item.editing = false;
+        var target = item.title || item.option
+        console.log( item[title])
+        if (target <= 0) {
+          item.title = "请至少输入一个字或者直接删去选项"
+        }
+        console.log(item)
         this.editing = null;
+      },
+      change(item){
+        if(item.length < 0) {
+          this.vote.title = '请至少输入一个字'
+        }
       },
       publish() {
         console.log(this.vote)
       },
-      test(item) {
-        console.log(item)
-        console.log(this)
-      },
       edit(item) {
         this.editing = item;
-        console.log(item.editing)
+        console.log(item)
       },
       addQuestion(cate) {
         let quest = {
@@ -119,7 +134,8 @@
           title: '请输入问题',
           cate: cate,
           // result: [],
-          editing: false
+          editing: false,
+          required: true
         }
         if (['radio','checkbox'].indexOf(cate) > -1) {
           // quest.options = ['选项一','选项二']
@@ -187,5 +203,8 @@ i:hover {
   width: 10px;
   height: 10px;
   border: 1px solid #000;
+}
+#add-quest {
+  margin: 0 auto;
 }
 </style>
